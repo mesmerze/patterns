@@ -1,39 +1,61 @@
 require 'spec_hepler'
+require_relative '../lib/strategies/markdown'
+require_relative '../lib/strategies/html'
 require_relative '../lib/generators/base'
-require_relative '../lib/generators/html'
-require_relative '../lib/generators/markdown'
+require_relative '../lib/generators/good_news'
+require_relative '../lib/generators/bad_news'
 
 module Newsletter
   describe Generators::Base do
     context 'when HTML' do
-      let(:newsletter) do
-        File.read(
-          File.expand_path('fixtures/newsletter.html', File.dirname(__FILE__))
-        )
+      context 'when news are good' do
+        let(:newsletter) do
+          File.read(
+            File.expand_path('fixtures/good_news.html', File.dirname(__FILE__))
+          )
+        end
+
+        it 'generates HTML' do
+          expect(Generators::GoodNews.new(strategy: :Html).render).to include(newsletter)
+        end
       end
 
-      it 'generates HTML' do
-        expect(Generators::Html.new.render).to include(newsletter)
+      context 'when news are bad' do
+        let(:newsletter) do
+          File.read(
+            File.expand_path('fixtures/bad_news.html', File.dirname(__FILE__))
+          )
+        end
+
+        it 'generates HTML' do
+          expect(Generators::BadNews.new(strategy: :Html).render).to include(newsletter)
+        end
       end
     end
 
     context 'when markdown' do
-      let(:newsletter) do
-        File.read(
-          File.expand_path('fixtures/newsletter.markdown', File.dirname(__FILE__))
-        )
+      context 'when news are good' do
+        let(:newsletter) do
+          File.read(
+            File.expand_path('fixtures/good_news.markdown', File.dirname(__FILE__))
+          )
+        end
+
+        it 'generates markdown' do
+          expect(Generators::GoodNews.new(strategy: :Markdown).render).to include(newsletter)
+        end
       end
 
-      it 'generates markdown' do
-        expect(Newsletter::Generators::Markdown.new.render).to include(newsletter)
-      end
-    end
+      context 'when news are bad' do
+        let(:newsletter) do
+          File.read(
+            File.expand_path('fixtures/bad_news.markdown', File.dirname(__FILE__))
+          )
+        end
 
-    context 'when we calling the base class' do
-      it 'Template method requires base class to ba abstract!!!' do
-        expect{ Generators::Base.new.render }.to raise_error(NotImplementedError)
-        expect{ Generators::Base.new.header }.to raise_error(NotImplementedError)
-        expect{ Generators::Base.new.body }.to raise_error(NotImplementedError)
+        it 'generates markdown' do
+          expect(Generators::BadNews.new(strategy: :Markdown).render).to include(newsletter)
+        end
       end
     end
   end
