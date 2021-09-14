@@ -1,20 +1,17 @@
 module Newsletter
   module Generators
     class Base
+      attr_reader :strategy
+
+      def initialize(strategy:)
+        @strategy = strategy
+      end
+
       def render
-        <<~HTMLORMARKDOWN
-          #{header}
-
-          #{body}
-        HTMLORMARKDOWN
-      end
-
-      def header
-        raise NotImplementedError
-      end
-
-      def body
-        raise NotImplementedError
+        Newsletter::Strategies
+          .const_get(strategy)
+          .new(self)
+          .execute
       end
     end
   end
