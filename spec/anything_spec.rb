@@ -4,6 +4,8 @@ require 'nokogiri'
 require 'pry'
 
 require 'newsletter/content'
+require 'newsletter/adapters/json'
+require 'newsletter/adapters/xml'
 
 module Newsletter
   describe Content do
@@ -14,7 +16,7 @@ module Newsletter
         )
       end
 
-      subject { Content.parse(json, :json) }
+      subject { Content.parse(json, :Json) }
 
       it 'parses the title' do
         expect(subject.title).to eq('Hello world!')
@@ -32,7 +34,7 @@ module Newsletter
         )
       end
 
-      subject { Content.parse(json, :xml) }
+      subject { Content.parse(json, :Xml) }
 
       it 'parses the title' do
         expect(subject.title).to eq('Hello world!')
