@@ -1,3 +1,5 @@
+require 'forwardable'
+
 class Product
   attr_reader :name, :category, :tags
 
@@ -5,6 +7,16 @@ class Product
     @name = name
     @category = category
     @tags = tags
+  end
+end
+
+class ProductDecorator
+  extend Forwardable
+
+  def_delegators :@context, :name, :category, :tags
+
+  def initialize(context)
+    @context = context
   end
 
   def as_html_row

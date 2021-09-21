@@ -27,6 +27,6 @@ describe Product do
   end
 
   it 'can be printed as HTML table row' do
-    expect(tomato.as_html_row).to eq(expected_result)
+    expect(ProductDecorator.new(tomato).as_html_row).to eq(expected_result)
   end
 end
