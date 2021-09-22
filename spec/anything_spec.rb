@@ -11,10 +11,10 @@ describe PaymentServiceFactory do
   let(:manager) { Manager.new('Boss') }
 
   it 'allows manager to perform payments' do
-    expect(described_class.for(manager).pay(user, 500)).not_to raise_error
+    expect { described_class.for(manager).pay(user, 500) }.not_to raise_error
   end
 
   it 'forbids user toperform payments' do
-    expect(described_class.for(user).pay(manager, 500)).to raise_error(Forbidden)
+    expect { described_class.for(user).pay(manager, 500) }.to raise_error(Forbidden)
   end
 end
