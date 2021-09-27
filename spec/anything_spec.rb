@@ -5,14 +5,14 @@ require 'family'
 
 describe Family do
   it 'prints out each member of the family' do
-    family = Family.new("Jacksons")
+    family = Family.new("Jackson")
 
     family.add_father("Jack", "M")
     family.add_mother("Jane", "F")
 
     3.times { |i| family.add_child("Child #{i}", "F") }
 
-    expect{ family.each_member(&:name) }.to output(<<~EOF
+    expect{ family.each_member { |member| puts family.full_name(member) } }.to output(<<~EOF
       Jack Jackson
       Jane Jackson
       Child 0 Jackson

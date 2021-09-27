@@ -14,7 +14,6 @@ class Child
   end
 end
 
-
 class Family
   def initialize(name)
     @surname = name
@@ -35,14 +34,12 @@ class Family
   end
 
   def each_member
-    puts(
-      <<~EOF
-        #{ @father.first_name } Jackson
-        #{ @mother.first_name } Jackson
-        #{ @children[0].first_name } Jackson
-        #{ @children[1].first_name } Jackson
-        #{ @children[2].first_name } Jackson
-      EOF
-    )
+    [@father, @mother, @children].flatten.each do |member|
+      yield(member)
+    end
+  end
+
+  def full_name(member)
+    "#{member.first_name} #{@surname}"
   end
 end
