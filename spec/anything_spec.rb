@@ -13,20 +13,20 @@ describe CarProductionLine do
   let(:line) { CarProductionLine.new }
 
   it '1st step - chassis' do
-    expect{ line.state }.to be(ChassisState)
+    expect(line.state).to be_a(ChassisState)
   end
 
   it '2nd step - enging' do
     line.install :engine
 
-    expect{ line.state }.to be(EngineState)
+    expect(line.state).to be_a(EngineState)
   end
 
   it '3rd step - hood' do
     line.install :engine
     line.install :hood
 
-    expect{ line.state }.to be(HoodState)
+    expect(line.state).to be_a(HoodState)
   end
 
   it '3rd step - hood' do
