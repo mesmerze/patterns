@@ -4,7 +4,7 @@ require 'pry'
 require 'rental_plan'
 
 describe RentalPlan do
-  let(:plan) { RentalPlan.new 'My rental plan' }
+  let(:plan) { RentalPlan.build 'My rental plan' }
 
   it 'it has metadata' do
     expect(plan.name).to eq('My rental plan')
@@ -12,7 +12,7 @@ describe RentalPlan do
 
   it 'has list of day ranges' do
     expect(plan.ranges).to be_a(Array)
-    expect(plan.sample.start).to eq(1)
+    expect(plan.ranges.sample.start).to eq(1)
   end
 
   describe 'each day range' do
